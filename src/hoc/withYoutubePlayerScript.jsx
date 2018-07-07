@@ -1,6 +1,10 @@
 import React from 'react';
 
-const withYoutubePlayerScript = options => WrappedComponent => class extends React.Component {
+/**
+ * HOC to handle loading youtube script
+ * before display sub-component
+ */
+const withYoutubePlayerScript = () => WrappedComponent => class extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

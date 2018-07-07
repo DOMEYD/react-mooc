@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import withYoutubePlayerScript from '../hoc/withYoutubePlayerScript';
 
 @withYoutubePlayerScript({})
@@ -10,48 +11,67 @@ export default class YoutubePlayerInput extends React.Component {
       interval: null,
     };
   }
+
   onPlayerStateChange(event) {
+    const {
+      handleTimeSpreading,
+    } = this.props;
+    const {
+      player,
+      interval,
+    } = this.state;
     switch (event.data) {
-      case YT.PlayerState.PLAYING:
-        const interval = setInterval(() => {
-          this.props.handleTimeSpreading({
-            currentTime: this.state.player.getCurrentTime(),
-            totalTime: this.state.player.getDuration(),
+      case window.YT.PlayerState.PLAYING:
+        const intervalID = setInterval(() => {
+          handleTimeSpreading({
+            currentTime: player.getCurrentTime(),
+            totalTime: player.getDuration(),
           });
         }, 500);
         this.setState({
-          interval,
+          interval: intervalID,
         });
         break;
-      case YT.PlayerState.PAUSED:
-        clearInterval(this.state.interval);
+      case window.YT.PlayerState.PAUSED:
+        clearInterval(interval);
         break;
+      default: break;
     }
   }
-  stopVideo() {
-    player.stopVideo();
-  }
+
   handleRef(node) {
-    if (!window.YT || node === null || this.state.player) {
+    const {
+      player,
+    } = this.state;
+    const {
+      videoID,
+    } = this.props;
+    if (!window.YT || node === null || player) {
       console.error('yt not loaded');
       return;
     }
-    const player = new window.YT.Player(node, {
+    const playerHandler = new window.YT.Player(node, {
       height: '120',
       width: '320',
-      videoId: this.props.videoID,
+      videoId: videoID,
       events: {
         // 'onReady': onPlayerReady,
-        'onStateChange': this.onPlayerStateChange.bind(this)
-      }
+        onStateChange: this.onPlayerStateChange.bind(this),
+      },
     });
     this.setState({
-      player,
+      player: playerHandler,
     });
   }
+
   render() {
     return (
       <div ref={this.handleRef.bind(this)} />
-    )
+    );
   }
 }
+
+YoutubePlayerInput.propTypes = {
+  handleTimeSpreading: PropTypes.func.isRequired,
+  videoID: PropTypes.string.isRequired,
+};
