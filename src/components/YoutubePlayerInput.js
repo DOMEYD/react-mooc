@@ -39,7 +39,7 @@ export default class YoutubePlayerInput extends React.Component {
     const player = new window.YT.Player(node, {
       height: '120',
       width: '320',
-      videoId: 'M7lc1UVf-VE',
+      videoId: this.props.videoID,
       events: {
         // 'onReady': onPlayerReady,
         'onStateChange': this.onPlayerStateChange.bind(this)
