@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withYoutubePlayerScript from '../hoc/withYoutubePlayerScript';
 
-@withYoutubePlayerScript({})
+@withYoutubePlayerScript
 export default class YoutubePlayerInput extends React.Component {
   constructor(props) {
     super(props);
