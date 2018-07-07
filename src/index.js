@@ -1,3 +1,5 @@
-export {
-  default as ReactMooc
-} from './components/ReactMooc';
+import ReactMooc from './components/ReactMooc';
+
+export default {
+  ReactMooc,
+};
