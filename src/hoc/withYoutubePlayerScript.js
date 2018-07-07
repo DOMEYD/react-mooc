@@ -1,7 +1,6 @@
 import React from 'react';
 
-const withYoutubePlayer = (options) => {
-
+const withYoutubePlayerScript = (options) => {
   return (WrappedComponent) => {
     return class extends React.Component {
       constructor(props) {
@@ -35,4 +34,4 @@ const withYoutubePlayer = (options) => {
   };
 };
 
-export default withYoutubePlayer;
+export default withYoutubePlayerScript;
